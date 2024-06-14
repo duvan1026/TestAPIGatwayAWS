@@ -12,14 +12,24 @@ namespace TestAPIGatewayAWS.OCR
 {
     public class OCRProcessAWS
     {
+        #region " declaraciones "
+
         private int _ImageWidth;
         private int _ImageHeight;
+
+        #endregion
+
+        #region " Constructor "
 
         public OCRProcessAWS(int imageWidth, int imageHeight) 
         {
             _ImageWidth = imageWidth;
             _ImageHeight = imageHeight;
         }
+
+        #endregion
+
+        #region " Funciones "
 
         /// <summary>
         /// Obtiene una lista de palabras identificadas mediante OCR a partir de una lista de IDs de palabras y bloques de texto.
@@ -193,7 +203,7 @@ namespace TestAPIGatewayAWS.OCR
         /// <param name="orderedLinesOCR"></param>
         /// <param name="maxVerticalGapPercentage"></param>
         /// <returns></returns>
-        public  List<BlockParagraph> DetectParagraphs(List<BlockLine> orderedLinesOCR, double maxVerticalGapPercentage)
+        private  List<BlockParagraph> DetectParagraphs(List<BlockLine> orderedLinesOCR, double maxVerticalGapPercentage)
         {
             try
             {
@@ -372,6 +382,7 @@ namespace TestAPIGatewayAWS.OCR
 
         }
 
+        #endregion
 
     }
 }
