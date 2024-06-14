@@ -70,6 +70,7 @@
     <Compile Include="Models\RelationShips\Relationship.cs" />
     <Compile Include="Models\RelationShips\RelationshipsLines.cs" />
     <Compile Include="Models\RelationShips\RelationshipsWords.cs" />
+    <Compile Include="OCR\OCRProcessAWS.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
