@@ -1,0 +1,47 @@
+import base64
+import json
+import logging
+import boto3
+
+from botocore.exceptions import ClientError
+
+# Set up logging.
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Crear un handler para enviar logs a CloudWatch
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+# Get the boto3 client.
+textract_client = boto3.client('textract')
+
+def lambda_handler(event, context):
+    logger.info("Inicio de la función Lambda")
+    try:
+        data = json.loads(event['body'])
+        image_bytes  = data["ImageBytes"]                # Obtener el campo ImageBytes del diccionario
+        img_b64decoded = base64.b64decode(image_bytes)   # Decodificar la cadena de Base64 a bytes
+        image = {'Bytes': img_b64decoded}
+        
+        logger.info("Imagen decodificada correctamente")
+        
+        # Analyze the document.
+        response = textract_client.detect_document_text(Document=image)
+        
+        # Get the Blocks
+        blocks = response['Blocks']
+        logger.info("Análisis de Textract completado con éxito")
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps(blocks)
+        }
+        
+    except Exception as error:
+        return {
+            'statusCode': 400,
+            'body': json.dumps(str(error))
+        }
